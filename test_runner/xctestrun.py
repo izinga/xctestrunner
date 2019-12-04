@@ -19,12 +19,12 @@ import os
 import shutil
 import tempfile
 
-from xctestrunner.shared import bundle_util
-from xctestrunner.shared import ios_constants
-from xctestrunner.shared import ios_errors
-from xctestrunner.shared import plist_util
-from xctestrunner.shared import xcode_info_util
-from xctestrunner.test_runner import xcodebuild_test_executor
+from shared import bundle_util
+from shared import ios_constants
+from shared import ios_errors
+from shared import plist_util
+from shared import xcode_info_util
+from test_runner import xcodebuild_test_executor
 
 
 TESTROOT_RELATIVE_PATH = '__TESTROOT__'
@@ -45,7 +45,7 @@ class XctestRun(object):
     Args:
       xctestrun_file_path: string, path of the xctest run file.
       test_type: string, test type of the test bundle. See supported test types
-          in module xctestrunner.shared.ios_constants.
+          in module shared.ios_constants.
       aut_bundle_id: string, the bundle id of app under test.
 
     Raises:
@@ -262,9 +262,9 @@ class XctestRunFactory(object):
       app_under_test_dir: string, path of the application to be tested.
       test_bundle_dir: string, path of the test bundle.
       sdk: string, SDKRoot of the test. See supported SDKs in module
-          xctestrunner.shared.ios_constants.
+          shared.ios_constants.
       test_type: string, test type of the test bundle. See supported test types
-          in module xctestrunner.shared.ios_constants.
+          in module shared.ios_constants.
       signing_options: dict, the signing app options. See
           ios_constants.SIGNING_OPTIONS_JSON_HELP for details.
       work_dir: string, work directory which contains run files.

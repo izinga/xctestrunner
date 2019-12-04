@@ -26,13 +26,13 @@ import subprocess
 import tempfile
 import xml.etree.ElementTree as ET
 
-from xctestrunner.shared import bundle_util
-from xctestrunner.shared import ios_constants
-from xctestrunner.shared import ios_errors
-from xctestrunner.shared import plist_util
-from xctestrunner.shared import provisioning_profile
-from xctestrunner.shared import xcode_info_util
-from xctestrunner.test_runner import xcodebuild_test_executor
+from shared import bundle_util
+from shared import ios_constants
+from shared import ios_errors
+from shared import plist_util
+from shared import provisioning_profile
+from shared import xcode_info_util
+from test_runner import xcodebuild_test_executor
 
 
 _DEFAULT_PERMS = 0o0777
@@ -550,7 +550,7 @@ def _GetTestProject(work_dir):
   with open(os.path.join(xcodeproj_path, 'project.pbxproj'),
             'w+') as target_file:
     target_file.write(
-        pkgutil.get_data('xctestrunner.test_runner',
+        pkgutil.get_data('test_runner',
                          'TestProject/TestProject.xcodeproj/project.pbxproj'))
   xcschemes_path = os.path.join(xcodeproj_path, 'xcshareddata/xcschemes')
   os.makedirs(xcschemes_path)
@@ -558,14 +558,14 @@ def _GetTestProject(work_dir):
             'w+') as target_file:
     target_file.write(
         pkgutil.get_data(
-            'xctestrunner.test_runner',
+            'test_runner',
             'TestProject/TestProject.xcodeproj/xcshareddata/xcschemes/'
             'TestProjectXctest.xcscheme'))
   with open(os.path.join(xcschemes_path, 'TestProjectXcuitest.xcscheme'),
             'w+') as target_file:
     target_file.write(
         pkgutil.get_data(
-            'xctestrunner.test_runner',
+            'test_runner',
             'TestProject/TestProject.xcodeproj/xcshareddata/xcschemes/'
             'TestProjectXcuitest.xcscheme'))
   return test_project_path
