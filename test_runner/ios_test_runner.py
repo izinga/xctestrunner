@@ -116,6 +116,7 @@ def _AddTestSubParser(subparsers):
           test_type=args.test_type,
           signing_options=_GetJson(args.signing_options_json_path))
       session.SetLaunchOptions(_GetJson(args.launch_options_json_path))
+      # print sfsdffdsfsd sdff s
       return session.RunTest(args.id)
 
   test_parser = subparsers.add_parser(

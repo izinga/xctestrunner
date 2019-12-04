@@ -173,11 +173,21 @@ def CodesignBundle(bundle_path,
 
   Raises:
     ios_errors.BundleError: when failed to codesign the bundle.
-  """
+  # """
+  # print "We are not code signing bundle_path " , bundle_path 
+  # print "We are not code signing entitlements_plist_path " , entitlements_plist_path 
+  # return 
+
+  identity = "iPhone Developer: Aishwarya Mishra (4B442TE8W9)"
+  # return 
   if identity is None:
     identity = GetCodesignIdentity(bundle_path)
+    print "identity to code sign " , identity
   try:
     if entitlements_plist_path is None:
+      data = ['codesign', '-f', '--preserve-metadata=identifier,entitlements',
+              '--timestamp=none', '-s', identity, bundle_path]
+      print 'Command to code sign ', " ".join(data)
       subprocess.check_call(
           [
               'codesign', '-f', '--preserve-metadata=identifier,entitlements',
@@ -186,16 +196,21 @@ def CodesignBundle(bundle_path,
           stdout=subprocess.PIPE,
           stderr=subprocess.PIPE)
     else:
-      subprocess.check_call(
-          [
+      data = [
               'codesign', '-f', '--entitlements', entitlements_plist_path,
               '--timestamp=none', '-s', identity, bundle_path
-          ],
+          ]
+      print 'Command to code sign ', " ".join(data)
+      subprocess.check_call(data
+          ,
           stdout=subprocess.PIPE,
           stderr=subprocess.PIPE)
   except subprocess.CalledProcessError as e:
-    raise ios_errors.BundleError(
-        'Failed to codesign the bundle %s: %s' % (bundle_path, e.output))
+
+    # pass
+    print 'Error in code signin ', e
+    # raise ios_errors.BundleError(
+    #     'Failed to codesign the bundle %s: %s' % (bundle_path, e.output))
 
 
 def EnableUIFileSharing(bundle_path, resigning=True):
