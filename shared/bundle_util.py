@@ -178,11 +178,14 @@ def CodesignBundle(bundle_path,
   # print "We are not code signing entitlements_plist_path " , entitlements_plist_path 
   # return 
 
-  identity = "iPhone Developer: Aishwarya Mishra (4B442TE8W9)"
+  # identity = "iPhone Developer: Aishwarya Mishra (4B442TE8W9)"
   # return 
+  identity = os.environ.get('signing_identity')
   if identity is None:
     identity = GetCodesignIdentity(bundle_path)
-    print "identity to code sign " , identity
+
+    # print "identity to code sign " , identity
+  print 'We are using identity to sign ', identity
   try:
     if entitlements_plist_path is None:
       data = ['codesign', '-f', '--preserve-metadata=identifier,entitlements',

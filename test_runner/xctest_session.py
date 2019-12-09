@@ -51,6 +51,7 @@ class XctestSession(object):
           specified, the directory will not be deleted after test ends.'
     """
     self._sdk = sdk
+    self._signing_identity = None
     self._work_dir = work_dir
     self._delete_work_dir = True
     self._output_dir = output_dir
@@ -78,7 +79,7 @@ class XctestSession(object):
   # TODO(albertdai): Support bundle id as the value of app_under_test and
   # test_bundle.
   def Prepare(self, app_under_test=None, test_bundle=None,
-              xctestrun_file_path=None, test_type=None, signing_options=None):
+              xctestrun_file_path=None, test_type=None, signing_identity=None, signing_options=None):
     """Prepares the test session.
 
     If xctestrun_file is not provided, will use app under test and test bundle
@@ -102,6 +103,7 @@ class XctestSession(object):
     """
     if not signing_options:
       signing_options = {}
+    self._signing_identity = signing_identity
 
     if self._work_dir:
       if not os.path.exists(self._work_dir):

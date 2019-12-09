@@ -18,12 +18,12 @@ This script supports XCTest in Xcode 6+ and XCUITest in Xcode 8+. It can specify
 a subset of test classes or test methods to run. It also supports passing
 environment variables and arguments to the test.
 """
-
-import argparse
+import os
 import json
+import sys
 import logging
 import subprocess
-import sys
+import argparse
 
 from shared import ios_constants
 from shared import ios_errors
@@ -75,7 +75,11 @@ def _AddGeneralArguments(parser):
       '--xctestrun',
       help=_XCTESTRUN_HELP)
 
+
   optional_arguments = parser.add_argument_group('Optional arguments')
+  optional_arguments.add_argument(
+      '--signing_identity',
+      help='siging identity to sign in app and test packages')
   optional_arguments.add_argument(
       '--launch_options_json_path',
       help=ios_constants.LAUNCH_OPTIONS_JSON_HELP)
@@ -109,11 +113,14 @@ def _AddTestSubParser(subparsers):
     sdk = _PlatformToSdk(args.platform) if args.platform else _GetSdk(args.id)
     with xctest_session.XctestSession(
         sdk=sdk, work_dir=args.work_dir, output_dir=args.output_dir) as session:
+      print 'args.signing_identity ', args.signing_identity
+      os.environ['signing_identity'] = args.signing_identity
       session.Prepare(
           app_under_test=args.app_under_test_path,
           test_bundle=args.test_bundle_path,
           xctestrun_file_path=args.xctestrun,
           test_type=args.test_type,
+          signing_identity=args.signing_identity,
           signing_options=_GetJson(args.signing_options_json_path))
       session.SetLaunchOptions(_GetJson(args.launch_options_json_path))
       # print sfsdffdsfsd sdff s
