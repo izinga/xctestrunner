@@ -485,7 +485,7 @@ class XctestRunFactory(object):
         'UserAttachmentLifetime': 'keepNever',
         'TestingEnvironmentVariables': test_envs,
         'DependentProductPaths': [
-            self._app_under_test_dir,
+            # self._app_under_test_dir,
             self._test_bundle_dir],
     }
 
